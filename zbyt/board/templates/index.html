@@ -1,0 +1,22 @@
+<html>
+<head>
+    <title>
+        ELO420!
+    </title>
+</head>
+<body>
+<h1>
+    TEST
+</h1>
+<a href="{% url 'add' %}">Add advert (click me)</a>
+{% if latest_advert_list %}
+    <ul>
+    {% for question in latest_advert_list %}
+        <li><a href="/{{ question.id }}/">{{ question.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No dupa are available.</p>
+{% endif %}
+</body>
+</html>

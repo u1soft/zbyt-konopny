@@ -1,0 +1,17 @@
+<html>
+<head>
+    <title>
+        ELO420!
+    </title>
+</head>
+<body>
+<h1>
+    Please, fill out the forms :)
+</h1>
+<form action="/add/" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>
