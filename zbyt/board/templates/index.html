@@ -6,9 +6,10 @@
 </head>
 <body>
 <h1>
-    TEST
+    ZBYT KONOPNY
 </h1>
-<a href="{% url 'add' %}">Add advert (click me)</a>
+<a href="{% url 'add' %}">Add advert (click me)</a><br><br>
+List of active adverts: <br>
 {% if latest_advert_list %}
     <ul>
     {% for question in latest_advert_list %}

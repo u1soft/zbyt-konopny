@@ -1,20 +1,22 @@
 from django.db import models
+from .choices import Choices
 
 
 class User(models.Model):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
-    email = models.CharField(max_length=200)
+    email = models.EmailField(max_length=200)
 
 
 class Advert(models.Model):
     title = models.CharField(max_length=200)
-    body = models.CharField(max_length=5000)
-    types = [('sell', "Sell"),
-             ('buy', "Buy"),
-             ('barter', "Exchange")]
+    body = models.TextField(max_length=5000)
+
     type = models.CharField(max_length=6,
-                            choices=types,
+                            choices=Choices.types,
                             default='sell')
+    category = models.CharField(max_length=6,
+                                choices=Choices.categories,
+                                default='seed')
     pub_date = models.DateTimeField('date published')
     creator = User

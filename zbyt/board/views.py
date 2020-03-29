@@ -1,15 +1,17 @@
 import datetime
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from .models import Advert, User
-from .forms import AddAdvertForm
+from .forms import AddAdvertForm, RegisterUser
+from django.contrib.auth.models import User as User2
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def add_advert(request):
     if request.method == 'POST':
         form = AddAdvertForm(request.POST)
         if form.is_valid():
-            # Advert.
             print("POST received")
             print(form.cleaned_data)
             advert_creator = User
@@ -33,9 +35,27 @@ def show_advert(request, advert_id):
     advert = get_object_or_404(Advert, pk=advert_id)
     user = User()
     creator = User.objects.get(pk=1)
-    print(creator.first_name)
     return render(request, 'show.html', {'advert': advert,
                                          'creator': creator})
+
+
+def register(request):
+    if request.method == 'POST':
+        form = RegisterUser(request.POST)
+        if form.is_valid():
+            print("POST received")
+            print(form.cleaned_data)
+            user = User2.objects.create_user(form.cleaned_data['username'],
+                                             form.cleaned_data['email'],
+                                             form.cleaned_data['password'])
+            user.last_name = form.cleaned_data['last_name']
+            user.first_name = form.cleaned_data['first_name']
+            user.save()
+            return redirect(index)
+    else:
+        form = RegisterUser()
+        return render(request, 'register.html',
+                      {'form': form})
 
 
 def index(request):
