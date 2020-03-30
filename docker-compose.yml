@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+  djangoapp:
+    build: .
+    volumes:
+      - .:/opt/services/djangoapp/src
+      - static_volume:/opt/services/djangoapp/static
+    networks:
+      - nginx_network
+
+  nginx:
+    image: nginx:latest
+    container_name: zbyt_nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./config/nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/error.log:/etc/nginx/error_log.log
+      - static_volume:/opt/services/djangoapp/static
+      - ./config/nginx/ssl:/etc/nginx/ssl
+    depends_on:
+      - djangoapp
+    networks:
+      - nginx_network
+
+networks:
+  nginx_network:
+    driver: bridge
+
+volumes:
+  static_volume:
