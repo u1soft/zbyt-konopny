@@ -17,7 +17,7 @@ class RegisterUser(forms.Form):
     re_password = forms.CharField(help_text='Powtórz hasło', widget=forms.PasswordInput)
 
 
-class AddAdvertForm(RegisterUser):
+class AddAdvertForm(forms.Form):
     title = forms.CharField(max_length=200, label="Tytuł")
     body = forms.CharField(widget=forms.Textarea, label="Opis")
     type = forms.ChoiceField(choices=Choices.types, label="Typ ogłoszenia", initial="sell")

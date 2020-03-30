@@ -1,15 +1,9 @@
 from django.db import models
 from .choices import Choices
+from django.contrib.auth.models import User
 
 
-class User(models.Model):
-    first_name = models.CharField(max_length=200)
-    last_name = models.CharField(max_length=200)
-    email = models.EmailField(max_length=200)
-    username = models.CharField(max_length=30)
-
-
-class Advert(User):
+class Advert(models.Model):
     title = models.CharField(max_length=200)
     body = models.TextField(max_length=5000)
 
@@ -20,3 +14,9 @@ class Advert(User):
                                 choices=Choices.categories,
                                 default='seed')
     pub_date = models.DateTimeField('date published')
+    creator = models.ForeignKey(User, related_name="created_by",
+                                on_delete=models.CASCADE)
+    objects = models.Manager()
+
+    def __str__(self):
+        return self.title
