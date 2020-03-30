@@ -6,9 +6,10 @@ class User(models.Model):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     email = models.EmailField(max_length=200)
+    username = models.CharField(max_length=30)
 
 
-class Advert(models.Model):
+class Advert(User):
     title = models.CharField(max_length=200)
     body = models.TextField(max_length=5000)
 
@@ -19,4 +20,3 @@ class Advert(models.Model):
                                 choices=Choices.categories,
                                 default='seed')
     pub_date = models.DateTimeField('date published')
-    creator = User

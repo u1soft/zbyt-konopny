@@ -5,9 +5,17 @@
     </title>
 </head>
 <body>
+{% block content %}
+here will be notification for logout ;) - HIDE ME :D
+{% endblock content %}
 <h1>
     ZBYT KONOPNY
 </h1>
+{% if logged %}
+<a href="/logout">Wyloguj</a>
+{% else %}
+<a href="/register">Zaloguj/Zarejestruj</a>
+{% endif %}
 <a href="{% url 'add' %}">Add advert (click me)</a><br><br>
 List of active adverts: <br>
 {% if latest_advert_list %}
