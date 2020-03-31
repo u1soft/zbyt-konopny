@@ -1,6 +1,8 @@
 import datetime
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+
+from .choices import Choices
 from .models import Advert, AdvertFile
 from .forms import AddAdvertForm, RegisterUser, LoginUser, AddAdvertFileForm
 from django.contrib.auth.models import User
@@ -153,6 +155,20 @@ def get_top(request):
     return context
 
 
+def get_top_types(request):
+    latest_advert_list_buy = Advert.objects.filter(type=Choices.types[1][0]).order_by('-pub_date')[:10]
+    latest_advert_list_sell = Advert.objects.filter(type=Choices.types[0][0]).order_by('-pub_date')[:10]
+    latest_advert_list_barter = Advert.objects.filter(type=Choices.types[2][0]).order_by('-pub_date')[:10]
+    context = {'latest_advert_buy': latest_advert_list_buy}
+    context.update({'latest_advert_sell': latest_advert_list_sell})
+    context.update({'latest_advert_barter': latest_advert_list_barter})
+    print(context)
+    return context
+
+
 def index(request):
     context = get_top(request)
+    types = Choices.types
+    context.update({'types': types})
+    context.update(get_top_types(request))
     return render(request, 'index.html', context)

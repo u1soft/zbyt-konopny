@@ -17,15 +17,40 @@ here will be notification for logout ;) - HIDE ME :D
 <a href="/register">Zaloguj/Zarejestruj</a>
 {% endif %}
 <a href="{% url 'add' %}">Add advert (click me)</a><br><br>
+<p>Dostępne kategorie:</p>
+{% if types %}
+<div>
+    {% for type in types %}
+    <div>
+        <a href="/">{{ type.1 }}</a>
+        <div>
+            {% if type.0 == 'buy' %}
+                {% for advert in latest_advert_buy %}
+                    <a href="/{{ advert.id }}"> {{ advert.title }} </a>
+                {% endfor %}
+            {% elif type.0 == 'sell' %}
+                {% for advert in latest_advert_sell %}
+                    <a href="/{{ advert.id }}">{{ advert.title }}</a>
+                {% endfor %}
+            {% else %}
+                {% for advert in latest_advert_barter %}
+                    <a href="/{{ advert.id }}">{{ advert.title }}</a>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
 List of active adverts: <br>
 {% if latest_advert_list %}
     <ul>
-    {% for question in latest_advert_list %}
-        <li><a href="/{{ question.id }}/">{{ question.title }}</a></li>
+    {% for advert in latest_advert_list %}
+        <li><a href="/{{ advert.id }}/">{{ advert.title }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
-    <p>No dupa are available.</p>
+    <p>Brak ogłoszeń.</p>
 {% endif %}
 </body>
 </html>
