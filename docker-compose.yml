@@ -7,7 +7,7 @@ services:
     volumes:
       - .:/opt/services/djangoapp/src
       - static_volume:/opt/services/djangoapp/static
-      - upload_volume:/opt/services/djangoapp/upload
+      - upload_volume:/opt/services/djangoapp/photos
     networks:
       - nginx_network
 
@@ -21,7 +21,7 @@ services:
       - ./config/nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/error.log:/etc/nginx/error_log.log
       - static_volume:/opt/services/djangoapp/static
-      - upload_volume:/opt/services/djangoapp/upload
+      - upload_volume:/opt/services/djangoapp/photos
       - ./config/nginx/ssl:/etc/nginx/ssl
     depends_on:
       - djangoapp
