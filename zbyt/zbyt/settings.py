@@ -143,7 +143,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
-MEDIA_ROOT = os.path.join(os.path.dirname(os.path.dirname(BASE_DIR)), 'upload')
+MEDIA_ROOT = '/opt/services/djangoapp/photos'
 MEDIA_URL = '/photos/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_collected')
 
