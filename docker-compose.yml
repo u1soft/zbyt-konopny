@@ -3,6 +3,7 @@ version: '3.7'
 services:
   djangoapp:
     build: .
+    container_name: zbyt_board
     volumes:
       - .:/opt/services/djangoapp/src
       - static_volume:/opt/services/djangoapp/static
