@@ -16,7 +16,23 @@ class Advert(models.Model):
     pub_date = models.DateTimeField('date published')
     creator = models.ForeignKey(User, related_name="created_by",
                                 on_delete=models.CASCADE)
+
     objects = models.Manager()
 
     def __str__(self):
         return self.title
+
+
+def user_dir_path(instance, filename):
+    return 'user_{0}/{1}'.format(instance.advert.creator.username, filename)
+
+
+class AdvertFile(models.Model):
+    file = models.FileField(upload_to=user_dir_path,
+                            blank=True,
+                            null=True)
+    advert = models.ForeignKey(Advert,
+                               on_delete=models.CASCADE,
+                               related_name='files')
+
+    objects = models.Manager()

@@ -1,11 +1,12 @@
 import datetime
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render, redirect
-from .models import Advert
-from .forms import AddAdvertForm, RegisterUser, LoginUser
+from django.shortcuts import render, redirect
+from .models import Advert, AdvertFile
+from .forms import AddAdvertForm, RegisterUser, LoginUser, AddAdvertFileForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+from django.core.files.storage import default_storage
 
 
 def logout_view(request):
@@ -16,32 +17,61 @@ def logout_view(request):
 @login_required
 def add_advert(request):
     if request.method == 'POST':
-        form = AddAdvertForm(request.POST)
-        if form.is_valid():
+        has_pictures = False
+        upload = None
+        print(request.FILES.getlist('file'))
+        if request.FILES.getlist('file') is not None:
+            has_pictures = True
+            upload = request.FILES.getlist('file')
+            form = AddAdvertForm(request.POST)
+            form2 = AddAdvertFileForm(request.FILES)
+        else:
+            form = AddAdvertForm(request.POST)
+        if form.is_valid() & form2.is_valid():
             print("POST received")
-            print(request.user.username)
             advert_creator = User.objects.get(username=request.user.username)
             advert = Advert()
             advert.title = form.cleaned_data['title']
             advert.body = form.cleaned_data['body']
             advert.type = form.cleaned_data['type']
-            print(advert_creator)
             advert.creator = advert_creator
             advert.pub_date = datetime.datetime.now(datetime.timezone.utc)
             advert.save()
+            advert_key = advert.pk
+            if has_pictures:
+                files = AdvertFile(file=upload)
+                for file in files.file:
+                    print("Dubug files below:")
+                    print(file)
+                    default_storage.save(file.name, file)
+                    Advert.objects.get(pk=advert_key).files.update_or_create(file=file.name,
+                                                                             defaults=None)
+                    advert.save()
             context = get_top(request)
             return render(request, 'added.html', context=context)
+        else:
+            return HttpResponse("lame")
     else:
         form = AddAdvertForm()
+        form_files = AddAdvertFileForm()
         return render(request, 'add.html',
-                      {'form': form})
+                      {'form': form,
+                       "form_files": form_files})
 
 
 def show_advert(request, advert_id):
     advert = Advert.objects.get(pk=advert_id)
-    user = advert.creator
-    print(user)
-    return render(request, 'show.html', {'advert': advert})
+    files = AdvertFile.objects.filter(advert=advert_id)
+    urls = []
+    print(files)
+    for f in files:
+        print("stupid debug")
+        url = f.file.url
+        print(url)
+        urls.append(url)
+        print(urls)
+    return render(request, 'show.html', {'advert': advert,
+                                         'urls': urls})
 
 
 def login_user(request):
@@ -79,8 +109,8 @@ def register(request):
             user = (form.cleaned_data['username'])
             print(user)
             user = User.objects.create_user(form.cleaned_data['username'],
-                                             form.cleaned_data['email'],
-                                             form.cleaned_data['password'])
+                                            form.cleaned_data['email'],
+                                            form.cleaned_data['password'])
             user.last_name = form.cleaned_data['last_name']
             user.first_name = form.cleaned_data['first_name']
             user.save()

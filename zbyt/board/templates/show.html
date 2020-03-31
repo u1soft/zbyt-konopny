@@ -7,6 +7,10 @@
 <h3>{{ advert.body }}</h3>
 <br>
 Opublikowane przez: {{ advert.creator.first_name }} {{ advert.creator.last_name }} <br>
-Dnia: {{ advert.pub_date }}
+Dnia: {{ advert.pub_date }} <br>
+Zdjęcia:<br>
+{% for url in urls %}
+<a  href="{{ url }}"><img src="{{ url }}" width="250"/></a>
+{% endfor %}
 </body>
 </html>

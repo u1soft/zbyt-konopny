@@ -5,3 +5,4 @@ zbyt/board/__pycache__
 zbyt/zbyt/__pycache__
 zbyt/board/migrations/__pycache__
 config/nginx/ssl
+zbyt/upload

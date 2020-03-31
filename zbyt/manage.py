@@ -3,8 +3,6 @@
 import os
 import sys
 
-from django.core.management.commands import runserver
-
 
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'zbyt.settings')

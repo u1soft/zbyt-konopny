@@ -6,15 +6,19 @@
 </head>
 <body>
 <h1>
-    Please, fill out the forms :)
+    Dodawanie nowego ogłoszenia :)
 </h1>
-<form action="/add/" method="post">
+<form enctype="multipart/form-data" action="/add/" method="post">
     {% csrf_token %}
     {% for field in form %}
     <p>{{ field.label }}</p>
     <p>{{ field }}</p>
     {% endfor %}
-    <input type="submit" value="Submit">
+    {% for field in form_files %}
+    <p>{{ field.label }}</p>
+    <p>{{ field }}</p>
+    {% endfor %}
+    <input type="submit" name="upload" value="Submit">
 </form>
 
 </body>

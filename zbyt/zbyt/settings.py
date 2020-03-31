@@ -66,6 +66,13 @@ COMPRESS_OFFLINE = True
 LIBSASS_OUTPUT_STYLE = 'compressed'
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
+DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+
+FILE_UPLOAD_HANDLERS = (
+                        "django.core.files.uploadhandler.MemoryFileUploadHandler",
+                        "django.core.files.uploadhandler.TemporaryFileUploadHandler"
+)
+
 ROOT_URLCONF = 'zbyt.urls'
 
 LOGIN_URL = 'register'
@@ -136,4 +143,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+MEDIA_ROOT = os.path.join(BASE_DIR, 'upload')
+MEDIA_URL = '/upload/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_collected')
+
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

@@ -1,5 +1,7 @@
 from django import forms
-from .choices import Choices
+from django.forms import ClearableFileInput
+
+from .models import Advert, AdvertFile
 from .validators import validate_username
 
 
@@ -17,8 +19,16 @@ class RegisterUser(forms.Form):
     re_password = forms.CharField(help_text='Powtórz hasło', widget=forms.PasswordInput)
 
 
-class AddAdvertForm(forms.Form):
-    title = forms.CharField(max_length=200, label="Tytuł")
-    body = forms.CharField(widget=forms.Textarea, label="Opis")
-    type = forms.ChoiceField(choices=Choices.types, label="Typ ogłoszenia", initial="sell")
-    category = forms.ChoiceField(choices=Choices.categories, label="Kategoria", initial="seed")
+class AddAdvertForm(forms.ModelForm):
+    class Meta:
+        model = Advert
+        exclude = ['creator', 'pub_date']
+
+
+class AddAdvertFileForm(forms.ModelForm):
+    class Meta:
+        model = AdvertFile
+        exclude = ['advert']
+        widgets = {
+            'file': ClearableFileInput(attrs={'multiple': True})
+        }
