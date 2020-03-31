@@ -17,7 +17,7 @@ here will be notification for logout ;) - HIDE ME :D
 <a href="/register">Zaloguj/Zarejestruj</a>
 {% endif %}
 <a href="{% url 'add' %}">Add advert (click me)</a><br><br>
-<p>Dostępne kategorie:</p>
+<p>Z podziałem na rodzaj:</p>
 {% if types %}
 <div>
     {% for type in types %}
@@ -34,6 +34,31 @@ here will be notification for logout ;) - HIDE ME :D
                 {% endfor %}
             {% else %}
                 {% for advert in latest_advert_barter %}
+                    <a href="/{{ advert.id }}">{{ advert.title }}</a>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% if categories %}
+<div>
+    <p>Z podziałem na rodzaj:</p>
+    {% for category in categories %}
+    <div>
+        <a href="/">{{ category.1 }}</a>
+        <div>
+            {% if category.0 == 'seed' %}
+                {% for advert in latest_advert_list_seed %}
+                    <a href="/{{ advert.id }}"> {{ advert.title }} </a>
+                {% endfor %}
+            {% elif category.0 == 'flower' %}
+                {% for advert in latest_advert_list_flower %}
+                    <a href="/{{ advert.id }}">{{ advert.title }}</a>
+                {% endfor %}
+            {% else %}
+                {% for advert in latest_advert_list_fiber %}
                     <a href="/{{ advert.id }}">{{ advert.title }}</a>
                 {% endfor %}
             {% endif %}

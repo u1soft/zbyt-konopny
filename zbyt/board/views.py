@@ -155,13 +155,23 @@ def get_top(request):
     return context
 
 
-def get_top_types(request):
+def get_top_types():
     latest_advert_list_buy = Advert.objects.filter(type=Choices.types[1][0]).order_by('-pub_date')[:10]
     latest_advert_list_sell = Advert.objects.filter(type=Choices.types[0][0]).order_by('-pub_date')[:10]
     latest_advert_list_barter = Advert.objects.filter(type=Choices.types[2][0]).order_by('-pub_date')[:10]
     context = {'latest_advert_buy': latest_advert_list_buy}
     context.update({'latest_advert_sell': latest_advert_list_sell})
     context.update({'latest_advert_barter': latest_advert_list_barter})
+    return context
+
+
+def get_top_categories():
+    latest_advert_list_seed = Advert.objects.filter(category=Choices.categories[1][0]).order_by('-pub_date')[:10]
+    latest_advert_list_flower = Advert.objects.filter(category=Choices.categories[0][0]).order_by('-pub_date')[:10]
+    latest_advert_list_fiber = Advert.objects.filter(category=Choices.categories[2][0]).order_by('-pub_date')[:10]
+    context = {'latest_advert_list_seed': latest_advert_list_seed}
+    context.update({'latest_advert_list_flower': latest_advert_list_flower})
+    context.update({'latest_advert_list_fiber': latest_advert_list_fiber})
     print(context)
     return context
 
@@ -170,5 +180,8 @@ def index(request):
     context = get_top(request)
     types = Choices.types
     context.update({'types': types})
-    context.update(get_top_types(request))
+    context.update(get_top_types())
+    categories = Choices.categories
+    context.update(({'categories': categories}))
+    context.update(get_top_categories())
     return render(request, 'index.html', context)
