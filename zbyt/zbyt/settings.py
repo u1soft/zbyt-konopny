@@ -144,7 +144,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 MEDIA_ROOT = os.path.join(BASE_DIR, 'upload')
-MEDIA_URL = '/upload/'
+MEDIA_URL = '/photos/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_collected')
 
 USE_X_FORWARDED_HOST = True
