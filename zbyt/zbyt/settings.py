@@ -69,8 +69,8 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesSto
 DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
 
 FILE_UPLOAD_HANDLERS = (
-                        "django.core.files.uploadhandler.MemoryFileUploadHandler",
-                        "django.core.files.uploadhandler.TemporaryFileUploadHandler"
+    "django.core.files.uploadhandler.MemoryFileUploadHandler",
+    "django.core.files.uploadhandler.TemporaryFileUploadHandler"
 )
 
 ROOT_URLCONF = 'zbyt.urls'
@@ -149,3 +149,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static_collected')
 
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+try:
+    from . import local_settings
+    MEDIA_ROOT = local_settings.MEDIA_ROOT
+except ImportError:
+    pass

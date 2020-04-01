@@ -1,0 +1,23 @@
+<html>
+<body>
+<div>
+    {% load board_extras %}
+    {% if category == 'seed' %}
+        {% for advert in latest_advert_list_seed %}
+            <a href="/{{ advert.id|get_first_photo }}/"><img src="{{ advert.id|get_first_photo }}" height="120"></a>
+            <a href="/{{ advert.id }}"> {{ advert.title }} </a>
+        {% endfor %}
+    {% elif category == 'flower' %}
+        {% for advert in latest_advert_list_flower %}
+            <a href="/{{ advert.id|get_first_photo }}/"><img src="{{ advert.id|get_first_photo }}" height="120"></a>
+            <a href="/{{ advert.id }}">{{ advert.title }}</a>
+        {% endfor %}
+    {% else %}
+        {% for advert in latest_advert_list_fiber %}
+            <a href="/{{ advert.id|get_first_photo }}/"><img src="{{ advert.id|get_first_photo }}" height="120"></a>
+            <a href="/{{ advert.id }}">{{ advert.title }}</a>
+        {% endfor %}
+    {% endif %}
+</div>
+</body>
+</html>

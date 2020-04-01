@@ -29,6 +29,7 @@ def add_advert(request):
             form2 = AddAdvertFileForm(request.FILES)
         else:
             form = AddAdvertForm(request.POST)
+            form2 = form
         if form.is_valid() & form2.is_valid():
             print("POST received")
             advert_creator = User.objects.get(username=request.user.username)
@@ -65,13 +66,9 @@ def show_advert(request, advert_id):
     advert = Advert.objects.get(pk=advert_id)
     files = AdvertFile.objects.filter(advert=advert_id)
     urls = []
-    print(files)
     for f in files:
-        print("stupid debug")
         url = f.file.url
-        print(url)
         urls.append(url)
-        print(urls)
     return render(request, 'show.html', {'advert': advert,
                                          'urls': urls})
 
@@ -82,7 +79,6 @@ def login_user(request):
         redirect_to = request.GET.get('next')
         if redirect_to is None:
             redirect_to = '/'
-        print(form['password'])
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
@@ -155,25 +151,37 @@ def get_top(request):
     return context
 
 
-def get_top_types():
-    latest_advert_list_buy = Advert.objects.filter(type=Choices.types[1][0]).order_by('-pub_date')[:10]
-    latest_advert_list_sell = Advert.objects.filter(type=Choices.types[0][0]).order_by('-pub_date')[:10]
-    latest_advert_list_barter = Advert.objects.filter(type=Choices.types[2][0]).order_by('-pub_date')[:10]
+def get_top_types(long=10):
+    latest_advert_list_buy = Advert.objects.filter(type=Choices.types[1][0]).order_by('-pub_date')[:long]
+    latest_advert_list_sell = Advert.objects.filter(type=Choices.types[0][0]).order_by('-pub_date')[:long]
+    latest_advert_list_barter = Advert.objects.filter(type=Choices.types[2][0]).order_by('-pub_date')[:long]
     context = {'latest_advert_buy': latest_advert_list_buy}
     context.update({'latest_advert_sell': latest_advert_list_sell})
     context.update({'latest_advert_barter': latest_advert_list_barter})
     return context
 
 
-def get_top_categories():
-    latest_advert_list_seed = Advert.objects.filter(category=Choices.categories[1][0]).order_by('-pub_date')[:10]
-    latest_advert_list_flower = Advert.objects.filter(category=Choices.categories[0][0]).order_by('-pub_date')[:10]
-    latest_advert_list_fiber = Advert.objects.filter(category=Choices.categories[2][0]).order_by('-pub_date')[:10]
+def get_top_categories(long=10):
+    latest_advert_list_seed = Advert.objects.filter(category=Choices.categories[1][0]).order_by('-pub_date')[:long]
+    latest_advert_list_flower = Advert.objects.filter(category=Choices.categories[0][0]).order_by('-pub_date')[:long]
+    latest_advert_list_fiber = Advert.objects.filter(category=Choices.categories[2][0]).order_by('-pub_date')[:long]
     context = {'latest_advert_list_seed': latest_advert_list_seed}
     context.update({'latest_advert_list_flower': latest_advert_list_flower})
     context.update({'latest_advert_list_fiber': latest_advert_list_fiber})
-    print(context)
     return context
+
+
+def category(request, cat):
+    context = get_top_categories(40)
+    context.update(({'category': cat}))
+    return render(request, 'category.html', context)
+
+
+def by_type(request, typ):
+    context = get_top_types(40)
+    context.update({'type': typ})
+    print(context)
+    return render(request, 'type.html', context)
 
 
 def index(request):

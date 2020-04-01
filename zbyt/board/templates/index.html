@@ -22,7 +22,7 @@ here will be notification for logout ;) - HIDE ME :D
 <div>
     {% for type in types %}
     <div>
-        <a href="/">{{ type.1 }}</a>
+        <a href="/type/{{ type.0 }}/">{{ type.1 }}</a>
         <div>
             {% if type.0 == 'buy' %}
                 {% for advert in latest_advert_buy %}
@@ -47,7 +47,7 @@ here will be notification for logout ;) - HIDE ME :D
     <p>Z podziałem na rodzaj:</p>
     {% for category in categories %}
     <div>
-        <a href="/">{{ category.1 }}</a>
+        <a href="/category/{{ category.0 }}/">{{ category.1 }}</a>
         <div>
             {% if category.0 == 'seed' %}
                 {% for advert in latest_advert_list_seed %}

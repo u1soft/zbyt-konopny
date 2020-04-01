@@ -1,0 +1,29 @@
+<html>
+<body>
+<div>
+    {% load board_extras %}
+    {% if type == 'buy' %}
+    <div>
+        {% for advert in latest_advert_buy %}
+            <a href="/{{ advert.id|get_first_photo }}/"><img src="{{ advert.id|get_first_photo }}" height="120"></a>
+            <a href="/{{ advert.id }}"> {{ advert.title }} </a>
+        {% endfor %}
+    </div>
+    <div>
+        {% elif type == 'sell' %}
+        {% for advert in latest_advert_sell %}
+            <a href="/{{ advert.id|get_first_photo }}/"><img src="{{ advert.id|get_first_photo }}" height="120"></a>
+            <a href="/{{ advert.id }}">{{ advert.title }}</a>
+        {% endfor %}
+    </div>
+    <div>
+        {% else %}
+        {% for advert in latest_advert_barter %}
+            <a href="/{{ advert.id|get_first_photo }}/"><img src="{{ advert.id|get_first_photo }}" height="120"></a>
+            <a href="/{{ advert.id }}">{{ advert.title }}</a>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+</body>
+</html>
