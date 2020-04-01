@@ -8,3 +8,4 @@ config/nginx/ssl
 zbyt/upload
 zbyt/zbyt/local_settings.py
 zbyt/board/templatetags/__pycache__
+zbyt/static_collected

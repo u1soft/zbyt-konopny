@@ -6,7 +6,7 @@ register = template.Library()
 
 @register.filter
 def get_first_photo(advert_pk):
-    url = None
+    url = "/static/no_picture.jpg"
     ad = AdvertFile.objects.filter(advert=advert_pk).first()
     if ad is not None:
         url = ad.file.url
