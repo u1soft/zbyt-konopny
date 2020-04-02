@@ -28,10 +28,10 @@ def user_dir_path(instance, filename):
 
 
 class AdvertFile(models.Model):
-    file = models.FileField(upload_to=user_dir_path,
-                            blank=True,
-                            null=True,
-                            help_text="Jeden lub więcej plików")
+    file = models.ImageField(upload_to=user_dir_path,
+                             blank=True,
+                             null=True,
+                             help_text="Jeden lub więcej plików")
     advert = models.ForeignKey(Advert,
                                on_delete=models.CASCADE,
                                related_name='files')
