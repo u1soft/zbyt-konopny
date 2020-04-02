@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'b3fr9o1wnk=r)ti5=l0x_+@v)7gar-#m@iafk*r90y1w+hbv=='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['ravefully.fun',
                  'www.ravefully.fun',
