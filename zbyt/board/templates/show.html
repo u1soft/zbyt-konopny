@@ -3,14 +3,19 @@
     <title>ELO 420!!!</title>
 </head>
 <body>
+{% load thumbnail %}
 <h1>{{ advert.title }}</h1>
 <h3>{{ advert.body }}</h3>
 <br>
 Opublikowane przez: {{ advert.creator.first_name }} {{ advert.creator.last_name }} <br>
 Dnia: {{ advert.pub_date }} <br>
 Zdjęcia:<br>
-{% for url in urls %}
-<a  href="{{ url }}"><img src="{{ url }}" width="250"/></a>
+{% for file in files %}
+    {% thumbnail file.file.name "1200x1200" as big %}
+        {% thumbnail file.file.name "200x200" as small %}
+            <a href="{{ big.url }}" title="look ma!"><img src="{{ small.url }}"></a>
+        {% endthumbnail %}
+    {% endthumbnail %}
 {% endfor %}
 </body>
 </html>

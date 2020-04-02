@@ -49,10 +49,10 @@ def add_advert(request):
                     print("Dubug files below:")
                     print(file)
                     default_storage.save(user_dir_path(request, file.name), file)
-                    Advert.objects.get(pk=advert_key).files.update_or_create(file=file.name)
+                    Advert.objects.get(pk=advert_key).files.update_or_create(file=user_dir_path(request, file.name))
                     advert.save()
             context = get_top(request)
-            return index(request)
+            return redirect(index)
         else:
             return HttpResponse("lame")
     else:
@@ -63,23 +63,12 @@ def add_advert(request):
                        "form_files": form_files})
 
 
-def make_photo_path(request, files):
-    urls = []
-    for f in files:
-        url = '/user_' + request.user.username
-        url = f.file.url[0:7] + url + f.file.url[7:]
-        urls.append(url)
-        print("Debug urls...")
-        print(urls)
-    return urls
-
-
 def show_advert(request, advert_id):
     advert = Advert.objects.get(pk=advert_id)
     files = AdvertFile.objects.filter(advert=advert_id)
-    urls = make_photo_path(request, files)
+    file = files.first().file
     return render(request, 'show.html', {'advert': advert,
-                                         'urls': urls})
+                                         'files': files})
 
 
 def login_user(request):

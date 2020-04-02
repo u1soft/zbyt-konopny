@@ -1,6 +1,7 @@
 from django.db import models
 from .choices import Choices
 from django.contrib.auth.models import User
+from sorl.thumbnail import ImageField
 
 
 class Advert(models.Model):
@@ -28,10 +29,10 @@ def user_dir_path(instance, filename):
 
 
 class AdvertFile(models.Model):
-    file = models.ImageField(upload_to=user_dir_path,
-                             blank=True,
-                             null=True,
-                             help_text="Jeden lub więcej plików")
+    file = ImageField(upload_to=user_dir_path,
+                      blank=True,
+                      null=True,
+                      help_text="Jeden lub więcej plików")
     advert = models.ForeignKey(Advert,
                                on_delete=models.CASCADE,
                                related_name='files')

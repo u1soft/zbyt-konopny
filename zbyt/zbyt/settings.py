@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['ravefully.fun',
 
 INSTALLED_APPS = [
     'compressor',
+    'sorl.thumbnail',
     'board.apps.BoardConfig',
     'django.contrib.admin',
     'django.contrib.auth',
