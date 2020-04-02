@@ -66,7 +66,6 @@ COMPRESS_OFFLINE = True
 LIBSASS_OUTPUT_STYLE = 'compressed'
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
-DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
 
 FILE_UPLOAD_HANDLERS = (
     "django.core.files.uploadhandler.MemoryFileUploadHandler",
@@ -146,6 +145,7 @@ STATICFILES_DIRS = (
 MEDIA_ROOT = '/opt/services/djangoapp/photos'
 MEDIA_URL = '/photos/'
 STATIC_ROOT = '/opt/services/djangoapp/static'
+DEFAULT_FILE_STORAGE = MEDIA_ROOT
 
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -153,5 +153,6 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 try:
     from . import local_settings
     MEDIA_ROOT = local_settings.MEDIA_ROOT
+    DEFAULT_FILE_STORAGE = local_settings.DEFAULT_FILE_STORAGE
 except ImportError:
     pass
