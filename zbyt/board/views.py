@@ -66,9 +66,11 @@ def add_advert(request):
 def show_advert(request, advert_id):
     advert = Advert.objects.get(pk=advert_id)
     files = AdvertFile.objects.filter(advert=advert_id)
-    file = files.first().file
-    return render(request, 'show.html', {'advert': advert,
-                                         'files': files})
+    if files.first() is None:
+        return render(request, 'show.html', {'advert': advert})
+    else:
+        return render(request, 'show.html', {'advert': advert,
+                                             'files': files})
 
 
 def login_user(request):

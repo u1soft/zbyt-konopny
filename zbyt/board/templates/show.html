@@ -10,12 +10,16 @@
 Opublikowane przez: {{ advert.creator.first_name }} {{ advert.creator.last_name }} <br>
 Dnia: {{ advert.pub_date }} <br>
 Zdjęcia:<br>
-{% for file in files %}
-    {% thumbnail file.file.name "1200x1200" as big %}
-        {% thumbnail file.file.name "200x200" as small %}
-            <a href="{{ big.url }}" title="look ma!"><img src="{{ small.url }}"></a>
+{% if files %}
+    {% for file in files %}
+        {% thumbnail file.file.name "1200x1200" as big %}
+            {% thumbnail file.file.name "200x200" as small %}
+                <a href="{{ big.url }}" title="look ma!"><img src="{{ small.url }}"></a>
+            {% endthumbnail %}
         {% endthumbnail %}
-    {% endthumbnail %}
-{% endfor %}
+    {% endfor %}
+{% else %}
+    <img src="/static/no_picture.jpg" width="200">
+{% endif %}
 </body>
 </html>
