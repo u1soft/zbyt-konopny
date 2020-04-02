@@ -15,4 +15,4 @@ def get_first_photo(advert_pk):
         im = get_thumbnail(ad.file.path, '150x150', crop='center', quality=99)
         return im.url
     else:
-        return no_pic
+        return no_pic.url
