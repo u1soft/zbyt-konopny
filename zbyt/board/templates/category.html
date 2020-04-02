@@ -14,7 +14,7 @@
         {% endfor %}
     {% else %}
         {% for advert in latest_advert_list_fiber %}
-            <a href="/{{ advert.id }}/"><img src="{{ advert.id|get_first_photo|resize:'320x240,C' }}"></a>
+            <a href="/{{ advert.id }}/"><img src="{{ advert.id|get_first_photo }}"></a>
             <a href="/{{ advert.id }}">{{ advert.title }}</a>
         {% endfor %}
     {% endif %}

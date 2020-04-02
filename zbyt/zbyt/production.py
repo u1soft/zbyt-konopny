@@ -142,10 +142,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
-
+MEDIA_ROOT = '/opt/services/djangoapp/photos'
 MEDIA_URL = '/photos/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'upload')
-STATIC_ROOT = os.path.join(BASE_DIR, 'static_collected')
+STATIC_ROOT = '/opt/services/djangoapp/static'
 DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
 USE_X_FORWARDED_HOST = True
