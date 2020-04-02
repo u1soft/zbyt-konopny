@@ -1,16 +1,18 @@
 from ..models import AdvertFile, Advert
 from django import template
+from sorl.thumbnail import get_thumbnail
 
 register = template.Library()
 
 
 @register.filter
 def get_first_photo(advert_pk):
-    url = "/static/no_picture.jpg"
+    img = "no_picture.jpg"
+    no_pic = get_thumbnail(img, '150x150', crop='center', quality=99)
     ad = AdvertFile.objects.filter(advert=advert_pk).first()
     if ad is not None:
-        url = '/user_' + Advert.objects.filter(id=advert_pk).get().creator.username
-        url = ad.file.url[0:7] + url + ad.file.url[7:]
-        print("Debug urls...")
-        print(url)
-    return url
+        print(ad.file.path)
+        im = get_thumbnail(ad.file.path, '150x150', crop='center', quality=99)
+        return im.url
+    else:
+        return no_pic
