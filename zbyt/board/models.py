@@ -24,13 +24,14 @@ class Advert(models.Model):
 
 
 def user_dir_path(instance, filename):
-    return 'user_{0}/{1}'.format(instance.advert.creator.username, filename)
+    return 'user_{0}/{1}'.format(instance.user.username, filename)
 
 
 class AdvertFile(models.Model):
     file = models.FileField(upload_to=user_dir_path,
                             blank=True,
-                            null=True)
+                            null=True,
+                            help_text="Jeden lub więcej plików")
     advert = models.ForeignKey(Advert,
                                on_delete=models.CASCADE,
                                related_name='files')

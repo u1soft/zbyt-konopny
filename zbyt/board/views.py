@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from .choices import Choices
-from .models import Advert, AdvertFile
+from .models import Advert, AdvertFile, user_dir_path
 from .forms import AddAdvertForm, RegisterUser, LoginUser, AddAdvertFileForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -41,17 +41,18 @@ def add_advert(request):
             advert.pub_date = datetime.datetime.now(datetime.timezone.utc)
             advert.save()
             advert_key = advert.pk
+            print("upload")
+            print(upload)
             if has_pictures:
                 files = AdvertFile(file=upload)
                 for file in files.file:
                     print("Dubug files below:")
                     print(file)
-                    default_storage.save(file.name, file)
-                    Advert.objects.get(pk=advert_key).files.update_or_create(file=file.name,
-                                                                             defaults=None)
+                    default_storage.save(user_dir_path(request, file.name), file)
+                    Advert.objects.get(pk=advert_key).files.update_or_create(file=file.name)
                     advert.save()
             context = get_top(request)
-            return render(request, 'added.html', context=context)
+            return index(request)
         else:
             return HttpResponse("lame")
     else:
@@ -62,13 +63,21 @@ def add_advert(request):
                        "form_files": form_files})
 
 
+def make_photo_path(request, files):
+    urls = []
+    for f in files:
+        url = '/user_' + request.user.username
+        url = f.file.url[0:7] + url + f.file.url[7:]
+        urls.append(url)
+        print("Debug urls...")
+        print(urls)
+    return urls
+
+
 def show_advert(request, advert_id):
     advert = Advert.objects.get(pk=advert_id)
     files = AdvertFile.objects.filter(advert=advert_id)
-    urls = []
-    for f in files:
-        url = f.file.url
-        urls.append(url)
+    urls = make_photo_path(request, files)
     return render(request, 'show.html', {'advert': advert,
                                          'urls': urls})
 

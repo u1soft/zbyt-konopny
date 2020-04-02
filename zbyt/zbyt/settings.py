@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['ravefully.fun',
 
 INSTALLED_APPS = [
     'compressor',
+    'imagefit',
     'board.apps.BoardConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -145,10 +146,12 @@ STATICFILES_DIRS = (
 )
 MEDIA_ROOT = '/opt/services/djangoapp/photos'
 MEDIA_URL = '/photos/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static_collected')
+STATIC_ROOT = '/opt/services/djangoapp/static'
 
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+IMAGEFIT_ROOT = os.path.join(BASE_DIR, "public")
 
 try:
     from . import local_settings
