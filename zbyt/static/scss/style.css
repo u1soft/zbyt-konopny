@@ -1,0 +1,44 @@
+.logout {
+  display: none; }
+
+body {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: block;
+  background-color: #010101;
+  color: #f5f5f5;
+  font-family: Helvetica, sans-serif; }
+  body p {
+    color: #f5f5f5; }
+  body a {
+    color: #ccc;
+    text-decoration: none; }
+  body container {
+    text-align: center; }
+  body btn {
+    margin: 1px; }
+
+header .logo {
+  padding-top: 12px; }
+header nav a {
+  padding: 10px;
+  background: #222222;
+  text-decoration: underline; }
+
+content {
+  display: block; }
+  content advert {
+    display: block; }
+    content advert a {
+      padding: 8px;
+      padding-left: 30px;
+      padding-right: 30px;
+      background: #222222; }
+
+footer {
+  display: block;
+  padding: 24px; }
+  footer a {
+    background: none; }
+
+/*# sourceMappingURL=style.css.map */

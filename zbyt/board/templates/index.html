@@ -1,55 +1,70 @@
+{% load static %}
+<!DOCTYPE HTML>
 <html>
 <head>
+    <link rel= "stylesheet" type="text/css" href="{% static 'scss/style.css' %}" rel="stylesheet" media="screen">
     <title>
         ELO420!
     </title>
 </head>
 <body>
 {% block content %}
-here will be notification for logout ;) - HIDE ME :D
+<div class="logout">here will be notification for logout ;) - HIDE ME :D</div>
 {% endblock content %}
-<h1>
-    ZBYT KONOPNY
-</h1>
+<container>
+    <header>
+        <div class="logo"> 
+        <div class="title"><h1><a href="#"><img src="{% static 'img/zbyt-konopny.png' %}"></a></h1> 
+    </div>
+</div>
 {% if logged %}
-<a href="/logout">Wyloguj</a>
-{% else %}
-<a href="/register">Zaloguj/Zarejestruj</a>
-{% endif %}
-<a href="{% url 'add' %}">Add advert (click me)</a><br><br>
+<nav>
+    <a href="/logout">Wyloguj</a>
+    {% else %}
+    <a href="/register">Zaloguj/Zarejestruj</a>
+    {% endif %}
+    <a href="{% url 'add' %}">Add advert (click me)</a><br><br>
+</nav>
+</header>
+<content>
+<advert>
 <p>Z podziałem na rodzaj:</p>
 {% if types %}
+<type>
 <div>
     {% for type in types %}
     <div>
         <a href="/type/{{ type.0 }}/">{{ type.1 }}</a>
         <div>
-            {% if type.0 == 'buy' %}
+            <btn> {% if type.0 == 'buy' %}
                 {% for advert in latest_advert_buy %}
-                    <a href="/{{ advert.id }}"> {{ advert.title }} </a>
-                {% endfor %}
-            {% elif type.0 == 'sell' %}
+                   <a href="/{{ advert.id }}"> {{ advert.title }} </a>
+                {% endfor %} </btn>
+            <btn> {% elif type.0 == 'sell' %}
                 {% for advert in latest_advert_sell %}
                     <a href="/{{ advert.id }}">{{ advert.title }}</a>
-                {% endfor %}
-            {% else %}
+                {% endfor %} </btn>
+            <btn> {% else %}
                 {% for advert in latest_advert_barter %}
                     <a href="/{{ advert.id }}">{{ advert.title }}</a>
-                {% endfor %}
+                {% endfor %} </btn>
             {% endif %}
+
         </div>
     </div>
     {% endfor %}
 </div>
+</type>
 {% endif %}
 {% if categories %}
+<category>
 <div>
     <p>Z podziałem na rodzaj:</p>
     {% for category in categories %}
     <div>
         <a href="/category/{{ category.0 }}/">{{ category.1 }}</a>
         <div>
-            {% if category.0 == 'seed' %}
+            <btn> {% if category.0 == 'seed' %}
                 {% for advert in latest_advert_list_seed %}
                     <a href="/{{ advert.id }}"> {{ advert.title }} </a>
                 {% endfor %}
@@ -61,13 +76,15 @@ here will be notification for logout ;) - HIDE ME :D
                 {% for advert in latest_advert_list_fiber %}
                     <a href="/{{ advert.id }}">{{ advert.title }}</a>
                 {% endfor %}
-            {% endif %}
+            {% endif %} </btn>
         </div>
     </div>
     {% endfor %}
 </div>
+</category>
 {% endif %}
-List of active adverts: <br>
+<active>
+<p>List of active adverts:</p>
 {% if latest_advert_list %}
     <ul>
     {% for advert in latest_advert_list %}
@@ -77,5 +94,12 @@ List of active adverts: <br>
 {% else %}
     <p>Brak ogłoszeń.</p>
 {% endif %}
+</active>
+</advert>
+</content>
+<footer>
+&copy; <a href="#">ZbytKonopny.pl</a>
+</footer>
+</container>
 </body>
 </html>
