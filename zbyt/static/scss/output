@@ -1,0 +1,7 @@
+body {
+  background-color: #primary;
+  color: #f5f5f5; }
+  body p {
+    color: #secondary; }
+
+/*# sourceMappingURL=output.map */

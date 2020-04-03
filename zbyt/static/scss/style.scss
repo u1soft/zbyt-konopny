@@ -1,0 +1,46 @@
+$primary: #424242;
+$secondary: #f5f5f5;
+$bgcolor: #010101;
+$linkcolor: #ccc;
+$buttoncolor:#222222;
+$font-main: Helvetica, sans-serif;
+
+.logout {display:none;}
+
+body {
+	max-width:1280px;
+	margin:0 auto;
+	display:block;
+	background-color:$bgcolor;
+	color:$secondary;
+	font-family:$font-main;
+	p {	color:$secondary; }
+	a { color:$linkcolor; text-decoration:none; }
+	container {text-align:center;}
+	btn {margin:1px;}
+}
+
+header {
+	.logo {padding-top:12px;}
+	nav {
+		a {padding:10px; background:$buttoncolor;text-decoration:underline;}
+	}
+}
+
+content {
+	display:block;
+
+	advert {
+		display:block;
+		a {padding:8px; padding-left:30px;padding-right:30px; background:$buttoncolor;}
+
+		type{}
+		category{}
+		active{}
+	}
+}
+footer { 
+	display:block;
+	padding:24px;
+	a {background:none;}
+}
